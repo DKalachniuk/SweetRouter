@@ -9,7 +9,7 @@
 import Foundation
 
 public extension URL {
-    public struct Route {
+    struct Route {
         public let path: Path
         public let query: Query?
         public let fragment: String?

@@ -21,10 +21,10 @@ public struct Scheme: RawRepresentable {
 }
 
 public extension Scheme {
-    public static let http  = Scheme("http")
-    public static let https = Scheme("https")
-    public static let ws    = Scheme("ws")
-    public static let wss   = Scheme("wss")
+    static let http  = Scheme("http")
+    static let https = Scheme("https")
+    static let ws    = Scheme("ws")
+    static let wss   = Scheme("wss")
 }
 
 extension Scheme: Hashable {

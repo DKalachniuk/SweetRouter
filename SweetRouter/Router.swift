@@ -35,7 +35,7 @@ public protocol URLRepresentable {
 }
 
 public extension URLRepresentable {
-    public var url: URL {
+    var url: URL {
         guard let url = components.url else { fatalError("URL components are not valid") }
         return url
     }
@@ -58,7 +58,7 @@ public protocol EnvironmentType: URLRepresentable {
 }
 
 public extension EnvironmentType {
-    public var components: URLComponents {
+    var components: URLComponents {
         var components = URLComponents()
         let environment = value
         
@@ -71,5 +71,5 @@ public extension EnvironmentType {
 }
 
 public extension RouteType {
-    public var defaultPath: URL.Path { return [] }
+    var defaultPath: URL.Path { return [] }
 }
