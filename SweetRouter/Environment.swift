@@ -9,7 +9,7 @@
 import Foundation
 
 public extension URL {
-    public struct Env {
+    struct Env {
         public let scheme: Scheme
         public let host: HostType
         public let port: Int?

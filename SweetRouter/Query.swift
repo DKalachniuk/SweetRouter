@@ -13,7 +13,7 @@ public protocol QueryItemValue {
 }
 
 public extension URL {
-    public struct Query {
+    struct Query {
         fileprivate let items: [(name: String, value: QueryItemValue?)]
         
         public init(_ items: (name: String, value: QueryItemValue?)...) {

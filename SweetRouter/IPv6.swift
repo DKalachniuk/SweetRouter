@@ -29,7 +29,7 @@ extension IP {
             let intComponents = components.lazy.map({ $0.components(separatedBy: ":").map({ UInt16($0, radix: 16) }) })
             let intComponentsCount = intComponents.reduce(0, { $0 + $1.count })
             guard intComponentsCount <= numberOfQuarters else { return nil }
-            let flattenedComponents = intComponents.map({ $0.flatMap({ $0 }) })
+            let flattenedComponents = intComponents.map({ $0.compactMap({ $0 }) })
             guard flattenedComponents.reduce(0, { $0 + $1.count }) == intComponentsCount else { return nil }
             var result: [UInt16] = Array(repeating: 0, count: numberOfQuarters)
             func updateValues(from array: [UInt16], start: Int) {
@@ -66,7 +66,7 @@ extension IP {
             
             var separator = ":"
             
-            if results.count < 3, let index = results.index(of: "") {
+            if results.count < 3, let index = results.firstIndex(of: "") {
                 results[index] = "::"
                 separator = ""
             }
@@ -93,22 +93,15 @@ extension IP.V6: Hashable {
             && lhs.quartets.6 == rhs.quartets.6
             && lhs.quartets.7 == rhs.quartets.7
     }
-    
-    public var hashValue: Int {
-        var hash = 5381
-        func newHash(with value: UInt16) {
-            hash = ((hash << 5) &+ hash) &+ value.hashValue
-        }
-        
-        newHash(with: quartets.0)
-        newHash(with: quartets.1)
-        newHash(with: quartets.2)
-        newHash(with: quartets.3)
-        newHash(with: quartets.4)
-        newHash(with: quartets.5)
-        newHash(with: quartets.6)
-        newHash(with: quartets.7)
-        
-        return hash
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(quartets.0)
+        hasher.combine(quartets.1)
+        hasher.combine(quartets.2)
+        hasher.combine(quartets.3)
+        hasher.combine(quartets.4)
+        hasher.combine(quartets.5)
+        hasher.combine(quartets.6)
+        hasher.combine(quartets.7)
     }
 }

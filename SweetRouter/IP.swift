@@ -27,7 +27,7 @@ public struct IP: IPType {
     }
     
     public init?(_ string: String) {
-        let octets = string.components(separatedBy: ".").flatMap({ UInt8($0) })
+        let octets = string.components(separatedBy: ".").compactMap({ UInt8($0) })
         guard octets.count == 4 else { return nil }
         self.init(octets[0], octets[1], octets[2], octets[3])
     }
@@ -51,13 +51,11 @@ extension IP: Hashable {
             && lhs.fourthOctet == rhs.fourthOctet
         
     }
-    
-    public var hashValue: Int {
-        var hash = 5381
-        hash = ((hash << 5) &+ hash) &+ firstOctet.hashValue
-        hash = ((hash << 5) &+ hash) &+ secondOctet.hashValue
-        hash = ((hash << 5) &+ hash) &+ thirdOctet.hashValue
-        hash = ((hash << 5) &+ hash) &+ fourthOctet.hashValue
-        return hash
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(firstOctet)
+        hasher.combine(secondOctet)
+        hasher.combine(thirdOctet)
+        hasher.combine(fourthOctet)
     }
 }

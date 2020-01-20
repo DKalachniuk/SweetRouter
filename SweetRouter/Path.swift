@@ -14,14 +14,14 @@ public protocol RoutePathComponent {
 }
 
 public extension RoutePathComponent {
-    public var pathValue: String {
+    var pathValue: String {
         let string = stringValue
         return string.isEmpty ? "" : URL.Path.separator + stringValue
     }
 }
 
 public extension URL {
-    public struct Path {
+    struct Path {
         fileprivate static let separator = "/"
         fileprivate let path: [RoutePathComponent]
         
@@ -59,7 +59,7 @@ extension URL.Path: ExpressibleByArrayLiteral {
 }
 
 public extension URL.Path {
-    public static func + (lhs: URL.Path, rhs: URL.Path) -> URL.Path {
+    static func + (lhs: URL.Path, rhs: URL.Path) -> URL.Path {
         return URL.Path(lhs.path + rhs.path)
     }
 }
